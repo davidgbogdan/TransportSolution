@@ -1,13 +1,12 @@
 package com.david.drxtransportsolution.controllers;
 
+import com.david.drxtransportsolution.dtos.LocationDTO;
 import com.david.drxtransportsolution.entities.Location;
 import com.david.drxtransportsolution.services.LocationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,28 +15,28 @@ public class LocationController {
 
     private final LocationService locationService;
 
-    @GetMapping(path = "/getLocations")
-    public List<Location> getLocations(){
+    @GetMapping
+    public List<Location> getLocations() {
         return locationService.getAllLocations();
     }
 
-    @GetMapping(path = "/getLocation/{id}")
-    public Optional<Location> getLocation(@PathVariable int id){
-        return locationService.getLocationById(id);
+    @GetMapping(path = "/{id}")
+    public Location getLocation(@PathVariable long id) {
+        return locationService.getLocation(id);
     }
 
-    @PostMapping(path = "/addLocation")
-    public void addLocation(@RequestBody Location requestLocation){
-        locationService.addNewLocation(requestLocation.getAddress());
+    @PostMapping
+    public void addLocation(@RequestBody LocationDTO locationDTO) {
+        locationService.addNewLocation(locationDTO);
     }
 
-    @PutMapping(path = "/updateLocation/{id}")
-    public void updateLocation(@PathVariable int id, @RequestBody Location requestLocation){
-        locationService.updateLocation(id, requestLocation.getAddress());
+    @PutMapping(path = "/{id}")
+    public void updateLocation(@PathVariable long id, @RequestBody LocationDTO locationDTO) {
+        locationService.updateLocation(id, locationDTO);
     }
 
-    @DeleteMapping(path = "/deleteLocation/{id}")
-    public void deleteLocation(@PathVariable int id){
+    @DeleteMapping(path = "/{id}")
+    public void deleteLocation(@PathVariable long id) {
         locationService.deleteLocation(id);
     }
 }

@@ -1,13 +1,13 @@
 package com.david.drxtransportsolution.services;
 
+import com.david.drxtransportsolution.dtos.ProgramDTO;
 import com.david.drxtransportsolution.entities.Program;
 import com.david.drxtransportsolution.repositories.ProgramRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,44 +19,27 @@ public class ProgramService {
         return programRepository.findAll();
     }
 
-    public Optional<Program> getProgramById(int id){
-        Optional<Program> optionalProgram = programRepository.findById(id);
-        if(optionalProgram.isPresent()){
-            return programRepository.findById(id);
-        }else{
-            throw new IllegalArgumentException("Location with id " + id + " not found");
-        }
+    public Program getProgramById(long programId){
+        return programRepository.findById(programId).orElseThrow(() -> new EntityNotFoundException("Location not found"));
+
     }
 
-    public void addNewProgram(int idGate, int idTransport, java.util.Date deliveryHour){
-        Program program = new Program();
-        program.setIdGate(idGate);
-        program.setIdTransport(idTransport);
-        program.setDeliveryHour(deliveryHour);
-
-        programRepository.save(program);
+    public void addNewProgram(ProgramDTO programDTO){
+        Program newProgram = new Program().gateId(programDTO.getGateId())
+                .transportId(programDTO.getTransportId())
+                .deliveryHour(programDTO.getDeliveryHour());
+        programRepository.save(newProgram);
     }
 
-    public void updateProgram(int id, int idGate, int idTransport, java.util.Date deliveryHour){
-        Optional<Program> optionalProgram = programRepository.findById(id);
-        if(optionalProgram.isPresent()){
-            Program program = optionalProgram.get();
-            program.setIdGate(idGate);
-            program.setIdTransport(idTransport);
-            program.setDeliveryHour(deliveryHour);
-
-            programRepository.save(program);
-        }else{
-            throw new IllegalArgumentException("Program with id " + id + " not found");
-        }
+    public void updateProgram(long programId, ProgramDTO programDTO){
+       Program existingProgram = programRepository.findById(programId).orElseThrow(() -> new EntityNotFoundException("Program not found"));
+       existingProgram.gateId(programDTO.getGateId())
+               .transportId(programDTO.getTransportId())
+               .deliveryHour(programDTO.getDeliveryHour());
+       programRepository.save(existingProgram);
     }
-
-    public void deleteProgram(int id){
-        Optional<Program> optionalProgram = programRepository.findById(id);
-        if(optionalProgram.isPresent()){
-            programRepository.deleteById(id);
-        }else{
-            throw new IllegalArgumentException("Program with id " + id + " not found");
-        }
+    public void deleteProgram(long programId){
+        Program existingProgram = programRepository.findById(programId).orElseThrow(() -> new EntityNotFoundException("Program not found"));
+        programRepository.delete(existingProgram);
     }
 }

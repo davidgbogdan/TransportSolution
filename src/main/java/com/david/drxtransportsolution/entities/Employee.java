@@ -7,9 +7,10 @@ import lombok.experimental.Accessors;
 
 @Entity
 @Table(name = "employee")
-@Setter
 @Getter
+@Setter
 @Accessors(fluent = true)
+
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

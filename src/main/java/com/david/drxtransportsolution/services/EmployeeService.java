@@ -1,12 +1,13 @@
 package com.david.drxtransportsolution.services;
 
+import com.david.drxtransportsolution.dtos.EmployeeDTO;
 import com.david.drxtransportsolution.entities.Employee;
 import com.david.drxtransportsolution.repositories.EmployeeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,52 +15,38 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
-    public List<Employee> getAllEmployees(){
+    public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    public Optional<Employee> getEmployeeById(int id){
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if(optionalEmployee.isPresent()){
-            return employeeRepository.findById(id);
-        }else{
-            throw new IllegalArgumentException("Employee with id " + id + " not found");
-        }
+    public Employee getEmployeeById(long employeeId) {
+        return employeeRepository.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
     }
 
-    public void addNewEmployee(int idLocation, String firstName, String lastName, String phoneNumber, String email){
-        Employee employee = new Employee();
-        employee.setIdLocation(idLocation);
-        employee.setFirstName(firstName);
-        employee.setLastName(lastName);
-        employee.setPhoneNumber(phoneNumber);
-        employee.setEmail(email);
+    public void addNewEmployee(EmployeeDTO employeeDTO) {
+        Employee newEmployee = new Employee()
+                .firstName(employeeDTO.getFirstName())
+                .locationId(employeeDTO.getLocationId())
+                .lastName(employeeDTO.getLastName())
+                .phoneNumber(employeeDTO.getPhoneNumber())
+                .email(employeeDTO.getEmail());
 
-        employeeRepository.save(employee);
+        employeeRepository.save(newEmployee);
     }
 
-    public void updateEmployee(int id, int idLocation, String firstName, String lastName, String phoneNumber, String email){
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if(optionalEmployee.isPresent()){
-            Employee employee = optionalEmployee.get();
-            employee.setIdLocation(idLocation);
-            employee.setFirstName(firstName);
-            employee.setLastName(lastName);
-            employee.setPhoneNumber(phoneNumber);
-            employee.setEmail(email);
+    public void updateEmployee(long employeeId, EmployeeDTO employeeDTO) {
+        Employee existingEmployee = employeeRepository.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+        existingEmployee.locationId(employeeDTO.getLocationId())
+                .firstName(employeeDTO.getFirstName())
+                .lastName(employeeDTO.getLastName())
+                .phoneNumber(employeeDTO.getPhoneNumber())
+                .email(employeeDTO.getEmail());
 
-            employeeRepository.save(employee);
-        }else{
-            throw new IllegalArgumentException("Employee with id " + id + " not found");
-        }
+        employeeRepository.save(existingEmployee);
     }
 
-    public void deleteEmployeeById(int id){
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if(optionalEmployee.isPresent()){
-            employeeRepository.deleteById(id);
-        }else{
-            throw new IllegalArgumentException("Employee with id " + id + " not found");
-        }
+    public void deleteEmployeeById(long employeeId) {
+        Employee existingEmployee = employeeRepository.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
+        employeeRepository.delete(existingEmployee);
     }
 }

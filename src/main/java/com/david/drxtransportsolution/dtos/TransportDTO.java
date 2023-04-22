@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transport {
+public class TransportDTO {
     private long transportId;
     private long driverId;
     private long locationId;

@@ -1,13 +1,12 @@
 package com.david.drxtransportsolution.controllers;
 
+import com.david.drxtransportsolution.dtos.ProgramDTO;
 import com.david.drxtransportsolution.entities.Program;
 import com.david.drxtransportsolution.services.ProgramService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,32 +14,28 @@ import java.util.Optional;
 public class ProgramController {
     private final ProgramService programService;
 
-    @GetMapping(path = "/getAllPrograms")
-    public List<Program> getPrograms(){
+    @GetMapping
+    public List<Program> getPrograms() {
         return programService.getAllPrograms();
     }
 
-    @GetMapping(path = "/getProgram/{id}")
-    public Optional<Program> getProgram(@PathVariable int id){
+    @GetMapping(path = "/{id}")
+    public Program getProgram(@PathVariable long id) {
         return programService.getProgramById(id);
     }
 
-    @PostMapping(path = "/addProgram")
-    public void addProgram(@RequestBody Program requestProgram){
-        programService.addNewProgram(requestProgram.getIdGate(),
-                requestProgram.getIdTransport(),
-                requestProgram.getDeliveryHour());
+    @PostMapping
+    public void addProgram(@RequestBody ProgramDTO programDTO) {
+        programService.addNewProgram(programDTO);
     }
 
-    @PutMapping(path = "/updateProgram")
-    public void updateProgram(@PathVariable int id, @RequestBody Program requestProgram){
-        programService.updateProgram(id, requestProgram.getIdGate(),
-                requestProgram.getIdTransport(),
-                requestProgram.getDeliveryHour());
+    @PutMapping(path = "/{id}")
+    public void updateProgram(@PathVariable long id, @RequestBody ProgramDTO programDTO) {
+        programService.updateProgram(id, programDTO);
     }
 
-    @DeleteMapping(path = "/deleteProgram")
-    public void deleteProgram(@PathVariable int id){
+    @DeleteMapping(path = "/{id}")
+    public void deleteProgram(@PathVariable long id) {
         programService.deleteProgram(id);
     }
 }

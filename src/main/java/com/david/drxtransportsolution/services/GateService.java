@@ -1,9 +1,10 @@
 package com.david.drxtransportsolution.services;
 
+import com.david.drxtransportsolution.dtos.GateDTO;
 import com.david.drxtransportsolution.entities.Gate;
 import com.david.drxtransportsolution.repositories.GateRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,39 +20,23 @@ public class GateService {
         return gateRepository.findAll();
     }
 
-    public Optional<Gate> getGateById(int id){
-        Optional<Gate> optionalGate = gateRepository.findById(id);
-        if(optionalGate.isPresent()){
-            return gateRepository.findById(id);
-        }else{
-            throw new IllegalArgumentException("Gate with id " + id + " not found");
-        }
+    public Gate getGateById(long gateId){
+        return gateRepository.findById(gateId).orElseThrow(() -> new EntityNotFoundException("Gate not found"));
     }
 
-    public void addNewGate(int idLocation){
-        Gate gate = new Gate();
-        gate.setIdLocation(idLocation);
-        gateRepository.save(gate);
+    public void addNewGate(GateDTO gateDTO){
+        Gate newGate = new Gate().locationId(gateDTO.getLocationId());
+        gateRepository.save(newGate);
     }
 
-    public void updateGate(int id, int idLocation){
-        Optional<Gate> optionalGate = gateRepository.findById(id);
-        if(optionalGate.isPresent()){
-            Gate gate = optionalGate.get();
-            gate.setIdLocation(idLocation);
-
-            gateRepository.save(gate);
-        }else{
-            throw new IllegalArgumentException("Gate with id " + id + " not found");
-        }
+    public void updateGate(long gateId, GateDTO gateDTO){
+        Gate existingGate = gateRepository.findById(gateId).orElseThrow(() -> new EntityNotFoundException("Gate not found"));
+        existingGate.locationId(gateDTO.getLocationId());
+        gateRepository.save(existingGate);
     }
 
-    public void deleteGate(int id){
-        Optional<Gate> optionalGate = gateRepository.findById(id);
-        if(optionalGate.isPresent()){
-            gateRepository.deleteById(id);
-        }else{
-            throw new IllegalArgumentException("Gate with id " + id + " not found");
-        }
+    public void deleteGate(long gateId){
+        Gate existingGate = gateRepository.findById(gateId).orElseThrow(() -> new EntityNotFoundException("Gate not found"));
+        gateRepository.delete(existingGate);
     }
 }

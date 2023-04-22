@@ -15,8 +15,8 @@ public class DriverService {
 
     private final DriverRepository driverRepository;
 
-    public Driver getDriverById(long id) {
-        return driverRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
+    public Driver getDriverById(long driverId) {
+        return driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
     }
 
     public List<Driver> getAllDrivers() {
@@ -24,27 +24,27 @@ public class DriverService {
     }
 
     public void addNewDriver(DriverDTO driverDTO) {
-        Driver driver = new Driver()
+        Driver newDriver = new Driver()
                 .firstName(driverDTO.getFirstName())
                 .lastName(driverDTO.getLastName())
                 .phoneNumber(driverDTO.getPhoneNumber())
                 .email(driverDTO.getEmail());
 
-        driverRepository.save(driver);
+        driverRepository.save(newDriver);
     }
 
-    public void updateDriver(long id, DriverDTO driverDTO) {
-        Driver existingDriver = driverRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
-        existingDriver.setFirstName(driverDTO.getFirstName());
-        existingDriver.setLastName(driverDTO.getLastName());
-        existingDriver.setPhoneNumber(driverDTO.getPhoneNumber());
-        existingDriver.setEmail(driverDTO.getEmail());
+    public void updateDriver(long driverId, DriverDTO driverDTO) {
+        Driver existingDriver = driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
+        existingDriver.firstName(driverDTO.getFirstName())
+                .lastName(driverDTO.getLastName())
+                .phoneNumber(driverDTO.getPhoneNumber())
+                .email(driverDTO.getEmail());
 
         driverRepository.save(existingDriver);
     }
 
-    public void deleteDriver(long id) {
-        Driver existingDriver = driverRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
+    public void deleteDriver(long driverId) {
+        Driver existingDriver = driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
         driverRepository.delete(existingDriver);
     }
 }

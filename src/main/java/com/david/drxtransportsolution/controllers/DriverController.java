@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/drivers")
+@RequestMapping(path = "/driver")
 @RequiredArgsConstructor
 public class DriverController {
 
@@ -39,4 +39,5 @@ public class DriverController {
     public void deleteDriver(@PathVariable long id) {
         driverService.deleteDriver(id);
     }
+
 }

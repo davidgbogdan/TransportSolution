@@ -1,13 +1,12 @@
 package com.david.drxtransportsolution.controllers;
 
+import com.david.drxtransportsolution.dtos.GateDTO;
 import com.david.drxtransportsolution.entities.Gate;
 import com.david.drxtransportsolution.services.GateService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,28 +15,28 @@ public class GateController {
 
     private final GateService gateService;
 
-    @GetMapping(path = "/getALlGates")
+    @GetMapping
     public List<Gate> getAllGates(){
         return gateService.getAllGates();
     }
 
-    @GetMapping(path = "/getGate/{id}")
-    public Optional<Gate> getGate(@PathVariable int id){
-        return gateService.getGateById(id);
+    @GetMapping(path = "/{id}")
+    public Gate getGetById(long gateId){
+        return gateService.getGateById(gateId);
     }
 
-    @PostMapping(path = "/addNewGate")
-    public void addNewGate(@RequestBody Gate requestGate){
-        gateService.addNewGate(requestGate.getIdLocation());
+    @PostMapping
+    public void addNewGate(@RequestBody GateDTO gateDTO){
+        gateService.addNewGate(gateDTO);
     }
 
-    @PutMapping(path = "updateGate/{id}")
-    public void updateGate(@PathVariable int id, @RequestBody Gate requestGate){
-        gateService.updateGate(id, requestGate.getIdLocation());
+    @PutMapping(path = "/{id}")
+    public void updateGate(@PathVariable long id, @RequestBody GateDTO gateDTO){
+        gateService.updateGate(id, gateDTO);
     }
 
-    @DeleteMapping(path = "/deleteGate/{id}")
-    public void deleteGate(@PathVariable int id){
+    @DeleteMapping(path = "/{id}")
+    public void deleteGate(@PathVariable long id){
         gateService.deleteGate(id);
     }
 }

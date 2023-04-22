@@ -1,13 +1,13 @@
 package com.david.drxtransportsolution.services;
 
+import com.david.drxtransportsolution.dtos.TransportDTO;
 import com.david.drxtransportsolution.entities.Transport;
 import com.david.drxtransportsolution.repositories.TransportRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,48 +19,31 @@ public class TransportService {
         return transportRepository.findAll();
     }
 
-    public Optional<Transport> getTransportById(long id){
-        Optional<Transport> optionalTransport = transportRepository.findById(id);
-        if(optionalTransport.isPresent()){
-            return transportRepository.findById(id);
-        }else{
-            throw new IllegalArgumentException("Location with id " + id + " not found");
-        }
+    public Transport getTransportById(long transportId){
+        return transportRepository.findById(transportId).orElseThrow(() -> new EntityNotFoundException("Transport not found"));
     }
 
-    public void addNewTransport(int idDriver, int idLocation, String status, java.util.Date dispatchDate, java.util.Date deliveryDate){
-        Transport transport = new Transport();
-        transport.setIdDriver(idDriver);
-        transport.setIdLocation(idLocation);
-        transport.setStatus(status);
-        transport.setDispatchDate(dispatchDate);
-        transport.setDeliveryDate(deliveryDate);
-
-        transportRepository.save(transport);
+    public void addNewTransport(TransportDTO transportDTO){
+        Transport newTransport = new Transport().driverId(transportDTO.getDriverId())
+                .locationId(transportDTO.getDriverId())
+                .status(transportDTO.getStatus())
+                .dispatchDate(transportDTO.getDispatchDate())
+                .deliveryDate(transportDTO.getDispatchDate());
+        transportRepository.save(newTransport);
     }
 
-    public void updateTransport(long id, int idDriver, int idLocation, String status, java.util.Date dispatchDate, java.util.Date deliveryDate){
-        Optional<Transport> optionalTransport = transportRepository.findById(id);
-        if(optionalTransport.isPresent()){
-            Transport transport = optionalTransport.get();
-            transport.setIdDriver(idDriver);
-            transport.setIdLocation(idLocation);
-            transport.setStatus(status);
-            transport.setDispatchDate(dispatchDate);
-            transport.setDeliveryDate(deliveryDate);
-
-            transportRepository.save(transport);
-        }else {
-            throw new IllegalArgumentException("Transport with id " + id + " not found");
-        }
+    public void updateTransport(long transportId, TransportDTO transportDTO){
+        Transport existingTransport = transportRepository.findById(transportId).orElseThrow(() -> new EntityNotFoundException("Transport not found"));
+        existingTransport.driverId(transportDTO.getDriverId())
+                .locationId(transportDTO.getLocationId())
+                .status(transportDTO.getStatus())
+                .dispatchDate(transportDTO.getDispatchDate())
+                .deliveryDate(transportDTO.getDeliveryHour());
+        transportRepository.save(existingTransport);
     }
 
-    public void deleteTransport(long id){
-        Optional<Transport> optionalTransport = transportRepository.findById(id);
-        if(optionalTransport.isPresent()){
-            transportRepository.deleteById(id);
-        }else {
-            throw new IllegalArgumentException("Transport with id " + id + " not found");
-        }
+    public void deleteTransport(long transportId){
+        Transport existingTransport = transportRepository.findById(transportId).orElseThrow(() -> new EntityNotFoundException("Transport not found"));
+        transportRepository.save(existingTransport);
     }
 }
