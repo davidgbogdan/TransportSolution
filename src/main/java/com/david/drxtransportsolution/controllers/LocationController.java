@@ -4,6 +4,7 @@ import com.david.drxtransportsolution.dtos.LocationDTO;
 import com.david.drxtransportsolution.entities.Location;
 import com.david.drxtransportsolution.services.LocationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,9 @@ public class LocationController {
     private final LocationService locationService;
 
     @GetMapping
-    public List<Location> getLocations() {
-        return locationService.getAllLocations();
+    public ResponseEntity<List<Location>> getLocations() {
+        List<Location> locationList = locationService.getAllLocations();
+        return ResponseEntity.ok(locationList);
     }
 
     @GetMapping(path = "/{id}")

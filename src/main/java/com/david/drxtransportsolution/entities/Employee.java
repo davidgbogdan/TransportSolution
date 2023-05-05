@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Table(name = "employee")
 @Getter
 @Setter
-@Accessors(fluent = true)
+@Accessors(chain = true)
 
 public class Employee {
     @Id

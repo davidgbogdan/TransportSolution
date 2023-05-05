@@ -21,21 +21,20 @@ public class ProgramService {
 
     public Program getProgramById(long programId){
         return programRepository.findById(programId).orElseThrow(() -> new EntityNotFoundException("Location not found"));
-
     }
 
     public void addNewProgram(ProgramDTO programDTO){
-        Program newProgram = new Program().gateId(programDTO.getGateId())
-                .transportId(programDTO.getTransportId())
-                .deliveryHour(programDTO.getDeliveryHour());
+        Program newProgram = new Program().setGateId(programDTO.getGateId())
+                .setTransportId(programDTO.getTransportId())
+                .setDeliveryHour(programDTO.getDeliveryHour());
         programRepository.save(newProgram);
     }
 
     public void updateProgram(long programId, ProgramDTO programDTO){
        Program existingProgram = programRepository.findById(programId).orElseThrow(() -> new EntityNotFoundException("Program not found"));
-       existingProgram.gateId(programDTO.getGateId())
-               .transportId(programDTO.getTransportId())
-               .deliveryHour(programDTO.getDeliveryHour());
+       existingProgram.setGateId(programDTO.getGateId())
+               .setTransportId(programDTO.getTransportId())
+               .setDeliveryHour(programDTO.getDeliveryHour());
        programRepository.save(existingProgram);
     }
     public void deleteProgram(long programId){

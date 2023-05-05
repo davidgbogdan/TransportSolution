@@ -25,13 +25,13 @@ public class GateService {
     }
 
     public void addNewGate(GateDTO gateDTO){
-        Gate newGate = new Gate().locationId(gateDTO.getLocationId());
+        Gate newGate = new Gate().setLocationId(gateDTO.getLocationId());
         gateRepository.save(newGate);
     }
 
     public void updateGate(long gateId, GateDTO gateDTO){
         Gate existingGate = gateRepository.findById(gateId).orElseThrow(() -> new EntityNotFoundException("Gate not found"));
-        existingGate.locationId(gateDTO.getLocationId());
+        existingGate.setLocationId(gateDTO.getLocationId());
         gateRepository.save(existingGate);
     }
 

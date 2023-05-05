@@ -24,13 +24,13 @@ public class LocationService {
     }
 
     public void addNewLocation(LocationDTO locationDTO) {
-        Location newLocation = new Location().address(locationDTO.getAddress());
+        Location newLocation = new Location().setAddress(locationDTO.getAddress());
         locationRepository.save(newLocation);
     }
 
     public void updateLocation(long locationId, LocationDTO locationDTO) {
         Location existingLocation = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotFoundException("Location not found"));
-        existingLocation.address(locationDTO.getAddress());
+        existingLocation.setAddress(locationDTO.getAddress());
         locationRepository.save(existingLocation);
     }
 

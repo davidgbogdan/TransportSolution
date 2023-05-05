@@ -5,6 +5,7 @@ import com.david.drxtransportsolution.entities.Employee;
 import com.david.drxtransportsolution.repositories.EmployeeRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,22 +26,22 @@ public class EmployeeService {
 
     public void addNewEmployee(EmployeeDTO employeeDTO) {
         Employee newEmployee = new Employee()
-                .firstName(employeeDTO.getFirstName())
-                .locationId(employeeDTO.getLocationId())
-                .lastName(employeeDTO.getLastName())
-                .phoneNumber(employeeDTO.getPhoneNumber())
-                .email(employeeDTO.getEmail());
+                .setFirstName(employeeDTO.getFirstName())
+                .setLocationId(employeeDTO.getLocationId())
+                .setLastName(employeeDTO.getLastName())
+                .setPhoneNumber(employeeDTO.getPhoneNumber())
+                .setEmail(employeeDTO.getEmail());
 
         employeeRepository.save(newEmployee);
     }
 
     public void updateEmployee(long employeeId, EmployeeDTO employeeDTO) {
         Employee existingEmployee = employeeRepository.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee not found"));
-        existingEmployee.locationId(employeeDTO.getLocationId())
-                .firstName(employeeDTO.getFirstName())
-                .lastName(employeeDTO.getLastName())
-                .phoneNumber(employeeDTO.getPhoneNumber())
-                .email(employeeDTO.getEmail());
+        existingEmployee.setLocationId(employeeDTO.getLocationId())
+                .setFirstName(employeeDTO.getFirstName())
+                .setLastName(employeeDTO.getLastName())
+                .setPhoneNumber(employeeDTO.getPhoneNumber())
+                .setEmail(employeeDTO.getEmail());
 
         employeeRepository.save(existingEmployee);
     }

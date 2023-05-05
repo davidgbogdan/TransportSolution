@@ -11,7 +11,7 @@ import java.time.LocalTime;
 @Table(name = "program")
 @Getter
 @Setter
-@Accessors(fluent = true)
+@Accessors(chain = true)
 public class Program {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,6 +4,7 @@ import com.david.drxtransportsolution.dtos.ProgramDTO;
 import com.david.drxtransportsolution.entities.Program;
 import com.david.drxtransportsolution.services.ProgramService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +16,9 @@ public class ProgramController {
     private final ProgramService programService;
 
     @GetMapping
-    public List<Program> getPrograms() {
-        return programService.getAllPrograms();
+    public ResponseEntity<List<Program>> getPrograms() {
+        List<Program> programList = programService.getAllPrograms();
+        return ResponseEntity.ok(programList);
     }
 
     @GetMapping(path = "/{id}")

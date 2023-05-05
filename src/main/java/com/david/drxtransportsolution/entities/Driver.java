@@ -8,7 +8,7 @@ import lombok.experimental.Accessors;
 @Entity
 @Table(name = "driver")
 @Setter
-@Accessors(fluent = true)
+@Accessors(chain = true)
 @Getter
 public class Driver {
     @Id

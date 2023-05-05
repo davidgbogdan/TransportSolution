@@ -4,6 +4,7 @@ import com.david.drxtransportsolution.dtos.DriverDTO;
 import com.david.drxtransportsolution.entities.Driver;
 import com.david.drxtransportsolution.services.DriverService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +17,11 @@ public class DriverController {
     private final DriverService driverService;
 
     @GetMapping
-    public List<Driver> getAllDrivers() {
-        return driverService.getAllDrivers();
+    public ResponseEntity<List<Driver>> getAllDrivers() {
+        List<Driver> driverList = driverService.getAllDrivers();
+        return ResponseEntity.ok(driverList);
+        //TODO - Refactor code for the other classes
+        //TODO - Add validation
     }
 
     @GetMapping(path = "/{id}")

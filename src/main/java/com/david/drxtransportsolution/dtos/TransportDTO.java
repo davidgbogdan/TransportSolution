@@ -19,5 +19,5 @@ public class TransportDTO {
     private long locationId;
     private Status status;
     private LocalDate dispatchDate;
-    private LocalDate deliveryHour;
+    private LocalDate deliveryDate;
 }

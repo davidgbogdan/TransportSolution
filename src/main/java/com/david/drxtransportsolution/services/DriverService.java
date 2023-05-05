@@ -25,20 +25,20 @@ public class DriverService {
 
     public void addNewDriver(DriverDTO driverDTO) {
         Driver newDriver = new Driver()
-                .firstName(driverDTO.getFirstName())
-                .lastName(driverDTO.getLastName())
-                .phoneNumber(driverDTO.getPhoneNumber())
-                .email(driverDTO.getEmail());
+                .setFirstName(driverDTO.getFirstName())
+                .setLastName(driverDTO.getLastName())
+                .setPhoneNumber(driverDTO.getPhoneNumber())
+                .setEmail(driverDTO.getEmail());
 
         driverRepository.save(newDriver);
     }
 
     public void updateDriver(long driverId, DriverDTO driverDTO) {
         Driver existingDriver = driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
-        existingDriver.firstName(driverDTO.getFirstName())
-                .lastName(driverDTO.getLastName())
-                .phoneNumber(driverDTO.getPhoneNumber())
-                .email(driverDTO.getEmail());
+        existingDriver.setFirstName(driverDTO.getFirstName())
+                .setLastName(driverDTO.getLastName())
+                .setPhoneNumber(driverDTO.getPhoneNumber())
+                .setEmail(driverDTO.getEmail());
 
         driverRepository.save(existingDriver);
     }

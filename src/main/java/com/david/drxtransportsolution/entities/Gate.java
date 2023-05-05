@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Table(name = "gate")
 @Getter
 @Setter
-@Accessors(fluent = true)
+@Accessors(chain = true)
 public class Gate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

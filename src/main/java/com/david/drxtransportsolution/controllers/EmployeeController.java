@@ -4,6 +4,7 @@ import com.david.drxtransportsolution.dtos.EmployeeDTO;
 import com.david.drxtransportsolution.entities.Employee;
 import com.david.drxtransportsolution.services.EmployeeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +18,9 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<Employee> getAllEmployees() {
-        return employeeService.getAllEmployees();
+    public ResponseEntity<List<Employee>> getAllEmployees() {
+        List<Employee> employeeList = employeeService.getAllEmployees();
+        return ResponseEntity.ok(employeeList);
     }
 
     @GetMapping(path = "/{id}")

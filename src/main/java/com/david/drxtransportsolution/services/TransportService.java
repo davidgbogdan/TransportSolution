@@ -24,26 +24,26 @@ public class TransportService {
     }
 
     public void addNewTransport(TransportDTO transportDTO){
-        Transport newTransport = new Transport().driverId(transportDTO.getDriverId())
-                .locationId(transportDTO.getDriverId())
-                .status(transportDTO.getStatus())
-                .dispatchDate(transportDTO.getDispatchDate())
-                .deliveryDate(transportDTO.getDispatchDate());
+        Transport newTransport = new Transport().setDriverId(transportDTO.getDriverId())
+                .setLocationId(transportDTO.getDriverId())
+                .setStatus(transportDTO.getStatus())
+                .setDispatchDate(transportDTO.getDispatchDate())
+                .setDeliveryDate(transportDTO.getDeliveryDate());
         transportRepository.save(newTransport);
     }
 
     public void updateTransport(long transportId, TransportDTO transportDTO){
         Transport existingTransport = transportRepository.findById(transportId).orElseThrow(() -> new EntityNotFoundException("Transport not found"));
-        existingTransport.driverId(transportDTO.getDriverId())
-                .locationId(transportDTO.getLocationId())
-                .status(transportDTO.getStatus())
-                .dispatchDate(transportDTO.getDispatchDate())
-                .deliveryDate(transportDTO.getDeliveryHour());
+        existingTransport.setDriverId(transportDTO.getDriverId())
+                .setLocationId(transportDTO.getLocationId())
+                .setStatus(transportDTO.getStatus())
+                .setDispatchDate(transportDTO.getDispatchDate())
+                .setDeliveryDate(transportDTO.getDeliveryDate());
         transportRepository.save(existingTransport);
     }
 
     public void deleteTransport(long transportId){
         Transport existingTransport = transportRepository.findById(transportId).orElseThrow(() -> new EntityNotFoundException("Transport not found"));
-        transportRepository.save(existingTransport);
+        transportRepository.delete(existingTransport);
     }
 }

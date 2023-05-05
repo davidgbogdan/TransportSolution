@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Table(name = "transport")
 @Getter
 @Setter
-@Accessors(fluent = true)
+@Accessors(chain = true)
 public class Transport {
     public enum Status {
         NEEXPEDIAT, EXPEDIAT, LIVRAT
