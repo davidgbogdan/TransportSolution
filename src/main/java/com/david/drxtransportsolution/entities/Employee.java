@@ -17,9 +17,6 @@ public class Employee {
     @Column(name = "employee_id")
     private long id;
 
-    @Column(name = "location_id")
-    private long locationId;
-
     @Column(name = "first_name")
     private String firstName;
 
@@ -31,4 +28,7 @@ public class Employee {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "location_id")
+    private long locationId;
 }

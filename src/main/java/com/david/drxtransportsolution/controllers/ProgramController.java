@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/program")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProgramController {
     private final ProgramService programService;
 

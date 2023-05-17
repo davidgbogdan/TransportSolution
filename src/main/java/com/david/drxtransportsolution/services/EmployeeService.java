@@ -27,10 +27,10 @@ public class EmployeeService {
     public void addNewEmployee(EmployeeDTO employeeDTO) {
         Employee newEmployee = new Employee()
                 .setFirstName(employeeDTO.getFirstName())
-                .setLocationId(employeeDTO.getLocationId())
                 .setLastName(employeeDTO.getLastName())
                 .setPhoneNumber(employeeDTO.getPhoneNumber())
-                .setEmail(employeeDTO.getEmail());
+                .setEmail(employeeDTO.getEmail())
+                .setLocationId(employeeDTO.getLocationId());
 
         employeeRepository.save(newEmployee);
     }

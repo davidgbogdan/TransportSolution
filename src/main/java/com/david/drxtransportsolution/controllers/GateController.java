@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/gate")
+@CrossOrigin(origins = "http://localhost:5173")
 public class GateController {
 
     private final GateService gateService;
