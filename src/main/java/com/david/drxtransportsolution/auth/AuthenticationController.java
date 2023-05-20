@@ -2,14 +2,14 @@ package com.david.drxtransportsolution.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.naming.AuthenticationException;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthenticationController {
 
     private final AuthenticationService service;
@@ -20,7 +20,12 @@ public class AuthenticationController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationRespose> register(@RequestBody AuthenticationRequest request){
+    public ResponseEntity<AuthenticationRespose> authenticate(@RequestBody AuthenticationRequest request) throws AuthenticationException {
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+    @PostMapping("/register/admin")
+    public ResponseEntity<AuthenticationRespose> registerAdmin(@RequestBody RegisterRequest request){
+        return ResponseEntity.ok(service.registerAdmin(request));
     }
 }
