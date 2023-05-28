@@ -20,8 +20,8 @@ public class GateService {
         return gateRepository.findAll();
     }
 
-    public Gate getGateById(long gateId){
-        return gateRepository.findById(gateId).orElseThrow(() -> new EntityNotFoundException("Gate not found"));
+    public List<Gate> getByLocationId(long locationId){
+        return gateRepository.findByLocationId(locationId);
     }
 
     public void addNewGate(GateDTO gateDTO){

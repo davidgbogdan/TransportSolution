@@ -1,5 +1,6 @@
 package com.david.drxtransportsolution.dtos;
 
+import com.david.drxtransportsolution.entities.Transport;
 import com.david.drxtransportsolution.entities.Transport.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ public class TransportDTO {
     private long transportId;
     private long driverId;
     private long locationId;
-    private Status status;
+    private Transport.Status status;
     private LocalDate dispatchDate;
     private LocalDate deliveryDate;
 }

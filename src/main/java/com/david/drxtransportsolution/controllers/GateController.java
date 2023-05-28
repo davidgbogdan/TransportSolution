@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/gate")
-@CrossOrigin(origins = "http://localhost:5173")
 public class GateController {
 
     private final GateService gateService;
@@ -23,11 +22,11 @@ public class GateController {
         return ResponseEntity.ok(gateList);
     }
 
-    @GetMapping(path = "/{id}")
-    public Gate getById(@PathVariable long id) {
-        return gateService.getGateById(id);
+    @GetMapping("/location/{locationId}")
+    public ResponseEntity<List<Gate>> getByLocationId(@PathVariable long locationId){
+        List<Gate> gateByLocationList = gateService.getByLocationId(locationId);
+        return ResponseEntity.ok(gateByLocationList);
     }
-
     @PostMapping
     public void addNewGate(@RequestBody GateDTO gateDTO) {
         gateService.addNewGate(gateDTO);

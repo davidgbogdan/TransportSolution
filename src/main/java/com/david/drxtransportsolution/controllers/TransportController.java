@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/transport")
-@CrossOrigin(origins = "http://localhost:5173")
 public class TransportController {
 
     private final TransportService transportService;
@@ -42,5 +41,11 @@ public class TransportController {
     @DeleteMapping(path = "/{id}")
     public void deleteTransport(@PathVariable long id) {
         transportService.deleteTransport(id);
+    }
+
+    @GetMapping(path = "/status")
+    public ResponseEntity<Transport.Status[]> getTransportStatuses() {
+        Transport.Status[] statuses = Transport.Status.values();
+        return ResponseEntity.ok(statuses);
     }
 }

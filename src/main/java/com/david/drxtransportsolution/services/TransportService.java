@@ -25,7 +25,7 @@ public class TransportService {
 
     public void addNewTransport(TransportDTO transportDTO){
         Transport newTransport = new Transport().setDriverId(transportDTO.getDriverId())
-                .setLocationId(transportDTO.getDriverId())
+                .setLocationId(transportDTO.getLocationId())
                 .setStatus(transportDTO.getStatus())
                 .setDispatchDate(transportDTO.getDispatchDate())
                 .setDeliveryDate(transportDTO.getDeliveryDate());
