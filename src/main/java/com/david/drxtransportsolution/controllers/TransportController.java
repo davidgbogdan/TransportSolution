@@ -29,8 +29,9 @@ public class TransportController {
     }
 
     @PostMapping
-    public void addTransport(@RequestBody TransportDTO transportDTO) {
-        transportService.addNewTransport(transportDTO);
+    public ResponseEntity<Long> addTransport(@RequestBody TransportDTO transportDTO){
+        long transportId = transportService.addNewTransport(transportDTO);
+        return ResponseEntity.ok(transportId);
     }
 
     @PutMapping(path = "/{id}")

@@ -23,13 +23,14 @@ public class TransportService {
         return transportRepository.findById(transportId).orElseThrow(() -> new EntityNotFoundException("Transport not found"));
     }
 
-    public void addNewTransport(TransportDTO transportDTO){
+    public long addNewTransport(TransportDTO transportDTO){
         Transport newTransport = new Transport().setDriverId(transportDTO.getDriverId())
                 .setLocationId(transportDTO.getLocationId())
                 .setStatus(transportDTO.getStatus())
                 .setDispatchDate(transportDTO.getDispatchDate())
                 .setDeliveryDate(transportDTO.getDeliveryDate());
-        transportRepository.save(newTransport);
+        Transport savedTransport = transportRepository.save(newTransport);
+        return savedTransport.getTransportId(); //Return the newly created transport
     }
 
     public void updateTransport(long transportId, TransportDTO transportDTO){
