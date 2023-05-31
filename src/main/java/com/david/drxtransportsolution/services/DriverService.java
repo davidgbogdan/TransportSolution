@@ -2,7 +2,9 @@ package com.david.drxtransportsolution.services;
 
 import com.david.drxtransportsolution.dtos.DriverDTO;
 import com.david.drxtransportsolution.entities.Driver;
+import com.david.drxtransportsolution.entities.Transport;
 import com.david.drxtransportsolution.repositories.DriverRepository;
+import com.david.drxtransportsolution.repositories.TransportRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 public class DriverService {
 
     private final DriverRepository driverRepository;
+    private final TransportRepository transportRepository;
 
     public Driver getDriverById(long driverId) {
         return driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
@@ -45,6 +48,10 @@ public class DriverService {
 
     public void deleteDriver(long driverId) {
         Driver existingDriver = driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
+
+        List<Transport> transportsToDelete = transportRepository.findByDriverId(driverId);
+        transportRepository.deleteAll(transportsToDelete);
+
         driverRepository.delete(existingDriver);
     }
 }

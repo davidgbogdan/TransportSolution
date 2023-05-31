@@ -1,7 +1,9 @@
 package com.david.drxtransportsolution.services;
 
 import com.david.drxtransportsolution.dtos.LocationDTO;
+import com.david.drxtransportsolution.entities.Gate;
 import com.david.drxtransportsolution.entities.Location;
+import com.david.drxtransportsolution.repositories.GateRepository;
 import com.david.drxtransportsolution.repositories.LocationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import java.util.List;
 public class LocationService {
 
     private final LocationRepository locationRepository;
+    private final GateRepository gateRepository;
 
     public List<Location> getAllLocations() {
         return locationRepository.findAll();
@@ -36,6 +39,10 @@ public class LocationService {
 
     public void deleteLocation(long locationId) {
         Location existingLocation = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotFoundException("Location not found"));
+
+        List<Gate> gatesToDelete = gateRepository.findByLocationId(locationId);
+        gateRepository.deleteAll(gatesToDelete);
+
         locationRepository.delete(existingLocation);
     }
 }
