@@ -24,8 +24,14 @@ public class TransportController {
     }
 
     @GetMapping(path = "/{id}")
-    public Transport getTransport(@PathVariable long id) {
-        return transportService.getTransportById(id);
+    public ResponseEntity<Transport> getTransport(@PathVariable long id) {
+
+        Transport transport = transportService.getTransportById(id);
+        if(transport != null){
+            return ResponseEntity.ok(transport);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -35,8 +41,9 @@ public class TransportController {
     }
 
     @PutMapping(path = "/{id}")
-    public void updateTransport(@PathVariable long id, @RequestBody TransportDTO transportDTO) {
+    public ResponseEntity<String> updateTransport(@PathVariable long id, @RequestBody TransportDTO transportDTO) {
         transportService.updateTransport(id, transportDTO);
+        return ResponseEntity.ok("Transport updated successfully");
     }
 
     @DeleteMapping(path = "/{id}")

@@ -46,12 +46,13 @@ public class DriverService {
         driverRepository.save(existingDriver);
     }
 
-    public void deleteDriver(long driverId) {
+    public boolean deleteDriver(long driverId) {
         Driver existingDriver = driverRepository.findById(driverId).orElseThrow(() -> new EntityNotFoundException("Driver not found"));
 
         List<Transport> transportsToDelete = transportRepository.findByDriverId(driverId);
         transportRepository.deleteAll(transportsToDelete);
 
         driverRepository.delete(existingDriver);
+        return true;
     }
 }

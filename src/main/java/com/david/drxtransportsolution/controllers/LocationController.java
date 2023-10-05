@@ -4,7 +4,9 @@ import com.david.drxtransportsolution.dtos.LocationDTO;
 import com.david.drxtransportsolution.entities.Location;
 import com.david.drxtransportsolution.services.LocationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,18 +25,25 @@ public class LocationController {
     }
 
     @GetMapping(path = "/{id}")
-    public Location getLocation(@PathVariable long id) {
-        return locationService.getLocation(id);
+    public ResponseEntity<Location> getLocation(@PathVariable long id) {
+        Location location = locationService.getLocationById(id);
+        if(location != null){
+            return ResponseEntity.ok(location);
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
-    public void addLocation(@RequestBody LocationDTO locationDTO) {
+    public ResponseEntity<String> addLocation(@Validated @RequestBody LocationDTO locationDTO) {
         locationService.addNewLocation(locationDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Location created successfully");
     }
 
     @PutMapping(path = "/{id}")
-    public void updateLocation(@PathVariable long id, @RequestBody LocationDTO locationDTO) {
+    public ResponseEntity<String> updateLocation(@PathVariable long id,@Validated @RequestBody LocationDTO locationDTO) {
         locationService.updateLocation(id, locationDTO);
+        return ResponseEntity.ok("Location updated successfully");
     }
 
     @DeleteMapping(path = "/{id}")

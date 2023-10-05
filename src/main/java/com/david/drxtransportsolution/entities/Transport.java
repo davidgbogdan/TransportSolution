@@ -28,8 +28,7 @@ public class Transport {
     @Column(name = "location_id")
     private long locationId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", columnDefinition = "ENUM('NEEXPEDIAT', 'EXPEDIAT', 'LIVRAT')")
+    @Column(name = "status", columnDefinition = "VARCHAR(255)")
     private Status status;
 
     @Column(name = "dispatch_date")

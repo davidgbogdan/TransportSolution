@@ -22,7 +22,7 @@ public class LocationService {
         return locationRepository.findAll();
     }
 
-    public Location getLocation(long locationId) {
+    public Location getLocationById(long locationId) {
         return locationRepository.findById(locationId).orElseThrow(() -> new EntityNotFoundException("Location not found"));
     }
 
