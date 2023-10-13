@@ -25,7 +25,7 @@ jobs:
 
       - name: Deploy to Digital Ocean
         env:
-          DO_API_TOKEN: ${{ dop_v1_c42d4e10b97a9b8f6014821686ccf3a6719723c36632bb702bb63003d94bd404 }}
+          DO_API_TOKEN: ${{ DIGITAL_OCEAN_TOKEN }}
         run: |
           scp -i id_rsa.pub DRXTransportSolution-0.0.1-SNAPSHOT.jar root@104.248.128.181
           ssh -o -i id_rsa.pub user@104.248.128.181 'bash -s' < deploy-script.sh
