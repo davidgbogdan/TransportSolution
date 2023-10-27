@@ -28,10 +28,10 @@ jobs:
           chmod +x ./mvnw
           if [ "${{ github.event.pull_request }}" == "null" ]; then
             echo '1';
-            ./mvnw package -DskipTests=true;
+            ./mvnw package -DskipTests=false;
           else
             echo '2';
-            ./mvnw package -DskipTests=false;
+            ./mvnw package -DskipTests=true;
           fi
           
 
