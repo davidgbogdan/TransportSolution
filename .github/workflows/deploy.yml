@@ -26,9 +26,10 @@ jobs:
       - name: Build and Test
         run: |
           if [ "${{ github.event.pull_request }}" == "null" ]; then
-            ./mvnw package -DskipTests=true
+            ./mvnw package -DskipTests=true;
           else
-            ./mvnw package -DskipTests=false
+            ./mvnw package -DskipTests=false;
+          fi
           
 
       - name: Deploy to Digital Ocean
