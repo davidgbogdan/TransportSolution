@@ -1,0 +1,21 @@
+name: Pull Request
+on:
+  pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Install JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Build with Maven
+        run: ./mvnw clean install
+
+      - name: Run Integration Tests
+        run: ./mvnw verify
