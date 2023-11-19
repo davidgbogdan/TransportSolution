@@ -1,10 +1,12 @@
 name: Deploy
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - closed
+
 jobs:
-  test:
+  if_merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Get code
@@ -21,9 +23,9 @@ jobs:
           chmod +x ./mvnw
           ./mvnw clean install
 
-      - name:
-          env:
-            DO_API_TOKEN: ${{ DIGITAL_OCEAN_TOKEN }}
-          run: |
-              scp -i id_rsa.pub DRXTransportSolution-0.0.1-SNAPSHOT.jar root@104.248.128.181
-              ssh -o -i id_rsa.pub root@104.248.128.181 'bash -s' < deploy-script.sh
+      - name: Deploy on Digital Ocean
+        env:
+          DO_API_TOKEN: ${{ DIGITAL_OCEAN_TOKEN }}
+        run: |
+          scp -i id_rsa.pub DRXTransportSolution-0.0.1-SNAPSHOT.jar root@104.248.128.181
+          ssh -o -i id_rsa.pub root@104.248.128.181 'bash -s' < deploy-script.sh
