@@ -12,12 +12,6 @@ jobs:
       - name: Get code
         uses: actions/checkout@v3
 
-      - name: Download jar artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: jar-artifact
-          path: target/
-
       - name: Install JDK
         uses: actions/setup-java@v3
         with:
@@ -33,6 +27,12 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITAL_OCEAN_TOKEN }}
+
+      - name: Download jar artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: jar-artifact
+          path: target/
 
       - name: Deploy
         run: |
