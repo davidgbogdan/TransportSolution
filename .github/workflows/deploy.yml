@@ -31,43 +31,16 @@ jobs:
           path: target/DRXTransportSolution-0.0.1-SNAPSHOT.jar
       - name: Run Unit Tests
         run: ./mvnw test
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Install JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      - name: Build with Maven
-        run: |
-          chmod +x ./mvnw
-          ./mvnw clean install
   deploy:
-    needs: build
+    needs: test
     if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Get code
-        uses: actions/checkout@v3
-
       - name: Download jar artifact
         uses: actions/download-artifact@v3
         with:
           name: jar-artifact
           path: target/
-      - name: Install JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-      - name: Build with Maven
-        run: |
-          chmod +x ./mvnw
-          ./mvnw clean install
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
