@@ -50,7 +50,7 @@ public class DriverController {
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deleteDriver(@PathVariable long id) {
         if (driverService.deleteDriver(id)) {
-            return ResponseEntity.ok("Driver was deleted successfully");
+            return ResponseEntity.ok("Driver has been deleted successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
