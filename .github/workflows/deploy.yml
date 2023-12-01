@@ -52,5 +52,5 @@ jobs:
           chmod 600 ~/.ssh/id_irs
       - name: Deploy
         run: |
-          scp target/DRXTransportSolution-0.0.1-SNAPSHOT.jar root@104.248.128.181:~/scripts/
-          ssh root@104.248.128.181 'bash -s' < scripts/deploy-script.sh
+          scp -o StrictHostKeyChecking=no target/DRXTransportSolution-0.0.1-SNAPSHOT.jar root@104.248.128.181:~/scripts/
+          ssh -o StrictHostKeyChecking=no root@104.248.128.181 'bash -s' < scripts/deploy-script.sh
