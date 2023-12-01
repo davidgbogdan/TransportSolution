@@ -38,19 +38,19 @@ public class DriverController {
     @PostMapping
     public ResponseEntity<String> addDriver(@Validated @RequestBody DriverDTO driverDTO) {
         driverService.addNewDriver(driverDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Driver has been created successfully");
+        return ResponseEntity.status(HttpStatus.CREATED).body("Driver was created successfully");
     }
 
     @PutMapping(path = "/{id}")
     public ResponseEntity<String> updateDriver(@PathVariable long id,@Validated @RequestBody DriverDTO driverDTO) {
         driverService.updateDriver(id, driverDTO);
-        return ResponseEntity.ok("Driver has been updated successfully");
+        return ResponseEntity.ok("Driver was updated successfully");
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<String> deleteDriver(@PathVariable long id) {
         if (driverService.deleteDriver(id)) {
-            return ResponseEntity.ok("Driver has been deleted successfully");
+            return ResponseEntity.ok("Driver was deleted successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
